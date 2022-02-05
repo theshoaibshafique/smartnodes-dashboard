@@ -2,7 +2,7 @@
   <div>
     <b-card
       v-if="pingVals && pingVals.length > 0"
-      title="❤️ Helping Ping.pub By Staking ❤️"
+      title="❤️ Support SmartNodes | Explorers By Staking With Us ❤️"
     >
       <b-table
         :items="pingVals"
