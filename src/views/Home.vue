@@ -26,27 +26,40 @@
       </div>
     </b-link>
 
-    <p class="mb-1">Smart Nodes</p>
-    <h2 class="mb-3">Cosmos Ecosystem Blockchains 🚀</h2>
+    <p class="mb-1">
+      Smart Nodes
+    </p>
+    <h2 class="mb-3">
+      Cosmos Ecosystem Blockchains 🚀
+    </h2>
 
     <div>
       <b-row class="match-height">
-        <b-col v-for="(data, index) in chains" :key="index" md="4" sm="6">
+        <b-col
+          v-for="(data, index) in chains"
+          :key="index"
+          md="4"
+          sm="6"
+        >
           <router-link :to="data.chain_name">
-            <b-card v-if="data" class="earnings-card text-left">
+            <b-card
+              v-if="data"
+              class="earnings-card text-left"
+            >
               <b-row>
                 <b-col cols="8">
                   <b-card-title class="mb-1 text-uppercase">
                     {{ data.chain_name }}
                     <small class="font-small-2">{{ data.sdk_version }}</small>
                   </b-card-title>
-                  <div class="font-small-2">Height</div>
+                  <div class="font-small-2">
+                    Height
+                  </div>
                   <h5 class="mb-1">
                     {{ data.height || "0" }}
                   </h5>
                   <b-card-text class="text-muted font-small-2">
-                    <span> Updated on </span
-                    ><span class="font-weight-bolder">{{
+                    <span> Updated on </span><span class="font-weight-bolder">{{
                       data.time || "..."
                     }}</span>
                   </b-card-text>
@@ -60,15 +73,21 @@
                     size="82"
                     badge
                     :badge-variant="data.variant"
-                /></b-col>
+                  /></b-col>
               </b-row>
             </b-card>
           </router-link>
         </b-col>
 
         <!-- no result found -->
-        <b-col v-show="!chains" cols="12" class="text-center">
-          <h4 class="mt-4">No blockchain found!!</h4>
+        <b-col
+          v-show="!chains"
+          cols="12"
+          class="text-center"
+        >
+          <h4 class="mt-4">
+            No blockchain found!!
+          </h4>
         </b-col>
         <!--/ no result found -->
       </b-row>
@@ -90,14 +109,14 @@ import {
   BNav,
   BNavItem,
   BButton,
-} from "bootstrap-vue";
-import Ripple from "vue-ripple-directive";
-import VuexyLogo from "@core/layouts/components/Logo.vue";
-import store from "@/store/index";
-import { timeIn, toDay } from "@/libs/utils";
-import DarkToggler from "@/@core/layouts/components/app-navbar/components/DarkToggler.vue";
-import Locale from "@/@core/layouts/components/app-navbar/components/Locale.vue";
-import AppFooter from "@/@core/layouts/components/AppFooter.vue";
+} from 'bootstrap-vue'
+import Ripple from 'vue-ripple-directive'
+import VuexyLogo from '@core/layouts/components/Logo.vue'
+import store from '@/store/index'
+import { timeIn, toDay } from '@/libs/utils'
+import DarkToggler from '@/@core/layouts/components/app-navbar/components/DarkToggler.vue'
+import Locale from '@/@core/layouts/components/app-navbar/components/Locale.vue'
+import AppFooter from '@/@core/layouts/components/AppFooter.vue'
 
 export default {
   components: {
@@ -121,53 +140,52 @@ export default {
     Ripple,
   },
   data() {
-    const chains = this.$store.state.chains.config;
+    const chains = this.$store.state.chains.config
     return {
       chains,
-      downImg: require("@/assets/images/pages/under-maintenance.svg"),
-    };
+      downImg: require('@/assets/images/pages/under-maintenance.svg'),
+    }
   },
   computed: {
     imgUrl() {
-      if (store.state.appConfig.layout.skin === "dark") {
+      if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.downImg = require("@/assets/images/pages/under-maintenance-dark.svg");
-        return this.downImg;
+        this.downImg = require('@/assets/images/pages/under-maintenance-dark.svg')
+        return this.downImg
       }
-      return this.downImg;
+      return this.downImg
     },
   },
   created() {
-    this.fetch();
-    this.timer = setInterval(this.fetch, 120000);
+    this.fetch()
+    this.timer = setInterval(this.fetch, 120000)
   },
   beforeDestroy() {
-    clearInterval(this.timer);
+    clearInterval(this.timer)
   },
   methods: {
     fetch() {
-      Object.keys(this.chains).forEach((k) => {
-        const chain = this.chains[k];
-        const index =
-          localStorage.getItem(`${chain.chain_name}-api-index`) || 0;
+      Object.keys(this.chains).forEach(k => {
+        const chain = this.chains[k]
+        const index = localStorage.getItem(`${chain.chain_name}-api-index`) || 0
         if (chain.api) {
-          const host = Array.isArray(chain.api) ? chain.api[index] : chain.api;
+          const host = Array.isArray(chain.api) ? chain.api[index] : chain.api
           fetch(`${host}/blocks/latest`)
-            .then((res) => res.json())
-            .then((b) => {
+            .then(res => res.json())
+            .then(b => {
               // console.log(b.block.header)
-              const { header } = b.block;
-              this.$set(chain, "height", header.height);
-              this.$set(chain, "time", toDay(header.time));
+              const { header } = b.block
+              this.$set(chain, 'height', header.height)
+              this.$set(chain, 'time', toDay(header.time))
               this.$set(
                 chain,
-                "variant",
-                timeIn(header.time, 3, "m") ? "danger" : "success"
-              );
-            });
+                'variant',
+                timeIn(header.time, 3, 'm') ? 'danger' : 'success',
+              )
+            })
         }
-      });
+      })
     },
   },
-};
+}
 </script>

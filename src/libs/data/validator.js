@@ -3,8 +3,8 @@ import ValidatorDescription from './valdiator-description'
 
 export default class Validator {
   constructor() {
-    this.operator_address = 'cosmosvaloper16xyempempp92x9hyzz9wrgf94r6j9h5f2w4n2l'
-    this.consensus_pubkey = 'cosmosvalconspub1zcjduepq0vu2zgkgk49efa0nqwzndanq5m4c7pa3u4apz4g2r9gspqg6g9cs3k9cuf'
+    this.operator_address = 'cosmosvaloper1hdrlqvyjfy5sdrseecjrutyws9khtxxaux62l7'
+    this.consensus_pubkey = 'cosmosvaloper1hdrlqvyjfy5sdrseecjrutyws9khtxxaux62l7'
     this.jailed = true
     this.status = 0
     this.tokens = 0
